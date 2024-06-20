@@ -13,6 +13,15 @@ def main():
         page_icon="🦁",
         layout="wide")
 
+    st.markdown(
+        """
+        <h1 style='text-align: center; color: white; font-size: 2.5em;'>
+            🦁 LION Data Dashboard
+        </h1>
+        """,
+        unsafe_allow_html=True
+    )
+
 
     alt.themes.enable("dark")
 
