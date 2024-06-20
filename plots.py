@@ -143,6 +143,8 @@ def speedometer(df, total_cases, steps=1000):
             'steps': gradient_steps
         }
     ))
+
+    fig.update_layout(margin=dict(t=0, b=0, l=0, r=0))
     return fig
 
 def generate_gradient_colors(start_color, end_color, steps):

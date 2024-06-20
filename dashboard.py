@@ -110,11 +110,31 @@ def main():
     with col2:
         fdg_col, inner_col2, psma_col = st.columns([1, 1, 1])
         with fdg_col:
+            # Centered secondary title with adjusted spacing
+            st.markdown(
+                """
+                <h2 style='text-align: center; margin-top: 50px; margin-bottom: 20px;'>
+                    FDG model
+                </h2>
+                """,
+                unsafe_allow_html=True
+            )
+
             st.plotly_chart(fdg_plot)
             plots.display_progress_bar(fdg_verified, constants.NUMBER_OF_FDG_CASES)
 
 
         with psma_col:
+            # Centered secondary title with adjusted spacing
+            st.markdown(
+                """
+                <h2 style='text-align: center; margin-top: 50px; margin-bottom: 20px;'>
+                    PSMA model
+                </h2>
+                """,
+                unsafe_allow_html=True
+            )
+
             st.plotly_chart(psma_plot)
             plots.display_progress_bar(psma_verified, constants.NUMBER_OF_PSMA_CASES)
 
