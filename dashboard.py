@@ -1,9 +1,9 @@
 import streamlit as st
-import pandas as pd
 import altair as alt
-import plotly.express as px
+import os
 
 import constants
+import download_data
 import plots
 
 
@@ -16,8 +16,11 @@ def main():
 
     alt.themes.enable("dark")
 
+    aws_access_key_id = os.getenv('AWS_ACCESS_KEY_ID')
+    aws_secret_access_key = os.getenv('AWS_SECRET_ACCESS_KEY')
 
-    df = pd.read_csv("https://www.dropbox.com/scl/fi/xhdaxy9pe80asr65rdagl/dashboard_excel.csv?rlkey=k0v95g03ddceqkhsj3l5n2leh&st=3dh0gr7j&dl=1")
+    df = download_data.read_excel_from_s3(bucket_name="enhance-pet", file_key="lion/dashboard_excel.csv",
+                                          aws_access_key_id=aws_access_key_id, aws_secret_access_key=aws_secret_access_key)
 
     fdg_subset = df[df.Tracer== 'FDG']
     psma_subset = df[df.Tracer == 'PSMA']
