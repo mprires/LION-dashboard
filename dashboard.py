@@ -13,6 +13,45 @@ def main():
         page_icon="🦁",
         layout="wide")
 
+
+
+    aws_access_key_id = os.getenv('AWS_ACCESS_KEY_ID')
+    aws_secret_access_key = os.getenv('AWS_SECRET_ACCESS_KEY')
+
+    lion_logo = download_data.fetch_image_from_s3("enhance-pet", "lion/lion_round.png",
+                                                   aws_access_key_id, aws_secret_access_key)
+
+    # Display the image using HTML and CSS for styling
+    st.markdown(
+        f"""
+        <style>
+        .clickable-image {{
+            position: absolute;
+            top: -150px;
+            left: -100px;
+            width: 350px;
+            height: 350px;
+            overflow: hidden;
+            border-radius: 50%;
+            box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
+            align-items: center;
+            justify-content: center;
+            z-index: 10;
+        }}
+        .clickable-image img {{
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }}
+        </style>
+
+        <a href="https://github.com/LalithShiyam/LION/tree/main" target="_blank" rel="noopener noreferrer" class="clickable-image">
+            <img src='data:image/jpeg;base64,{lion_logo}'>
+        </a>
+        """,
+        unsafe_allow_html=True
+    )
+
     st.markdown(
         """
         <h1 style='text-align: center; color: white; font-size: 2.5em;'>
@@ -21,12 +60,6 @@ def main():
         """,
         unsafe_allow_html=True
     )
-
-
-    alt.themes.enable("dark")
-
-    aws_access_key_id = os.getenv('AWS_ACCESS_KEY_ID')
-    aws_secret_access_key = os.getenv('AWS_SECRET_ACCESS_KEY')
 
     df = download_data.read_excel_from_s3(bucket_name="enhance-pet", file_key="lion/dashboard_excel.csv",
                                           aws_access_key_id=aws_access_key_id, aws_secret_access_key=aws_secret_access_key)
@@ -59,6 +92,58 @@ def main():
             st.plotly_chart(psma_plot)
             plots.display_progress_bar(psma_verified, constants.NUMBER_OF_PSMA_CASES)
 
+    enhance_logo = download_data.fetch_image_from_s3("enhance-pet", "lion/EANM-ENHANCE-PET-Reveal.jpg",
+                                                  aws_access_key_id, aws_secret_access_key)
+    st.markdown(
+        f"""
+        <style>
+        .bottom-right-image-container {{
+            position: absolute;
+            bottom: -200px;
+            right: 0px;
+            width: 250px;
+            height: 250px;
+            overflow: hidden;
+            border-radius: 0%;
+            box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
+            transition: opacity 0.3s ease;
+            z-index: 1000;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+        }}
+        .bottom-right-image {{
+            width: 100%;
+            height: 100%;
+            object-fit: contain;
+        }}
+        </style>
+
+        <a id="image-link2" href="https://www.enhance.pet" target="_blank" rel="noopener noreferrer">
+            <div class="bottom-right-image-container">
+                <img src='data:image/jpeg;base64,{enhance_logo}' class="bottom-right-image">
+            </div>
+        </a>
+        <script>
+        var imageLink2 = document.getElementById('image-link2');
+        var lastScrollTop = 0;
+
+        window.addEventListener('scroll', function() {{
+            var st = window.pageYOffset || document.documentElement.scrollTop;
+            if (st > lastScrollTop) {{
+                // Downscroll code
+                imageLink2.style.opacity = '0';
+            }} else {{
+                // Upscroll code
+                imageLink2.style.opacity = '1';
+            }}
+            lastScrollTop = st <= 0 ? 0 : st; // For Mobile or negative scrolling
+        }}, false);
+        </script>
+        """,
+        unsafe_allow_html=True
+    )
 
 
 main()
