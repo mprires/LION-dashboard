@@ -87,7 +87,7 @@ def main():
 
     st.markdown(header_html, unsafe_allow_html=True)
 
-    df = download_data.read_excel_from_s3(bucket_name="enhance-pet", file_key="lion/dashboard_excel.csv",
+    df = download_data.read_excel_from_s3(bucket_name="enhance-pet", file_key="lion/dashboard_excel_26062024.csv",
                                           aws_access_key_id=aws_access_key_id, aws_secret_access_key=aws_secret_access_key)
 
     fdg_subset = df[df.Tracer== 'FDG']
@@ -119,7 +119,16 @@ def main():
                 """,
                 unsafe_allow_html=True
             )
-
+            st.markdown(
+                """
+                <style>
+                    .speedometer-container {
+                        margin-top: -800px; /* Adjust this value as needed */
+                    }
+                </style>
+                """,
+                unsafe_allow_html=True
+            )
             st.plotly_chart(fdg_plot)
             plots.display_progress_bar(fdg_verified, constants.NUMBER_OF_FDG_CASES)
 
