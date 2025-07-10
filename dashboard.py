@@ -45,7 +45,7 @@ def main():
             object-fit: cover;
         }}
         </style>
-    <a href="https://www.enhance.pet" target="_blank" rel="noopener noreferrer" class="clickable-image">
+        <a href="https://www.enhance.pet" target="_blank" rel="noopener noreferrer" class="clickable-image">
             <img src='data:image/jpeg;base64,{enhance_logo}'>
         </a>
         """,
