@@ -87,7 +87,7 @@ def main():
 
     st.markdown(header_html, unsafe_allow_html=True)
 
-    df = download_data.read_excel_from_s3(bucket_name="enhance-pet", file_key="lion/dashobard_excel_23072024.csv",
+    df = download_data.read_excel_from_s3(bucket_name="enhance-pet", file_key="lion/dashboard_excel_10072025.csv",
                                           aws_access_key_id=aws_access_key_id, aws_secret_access_key=aws_secret_access_key)
 
     fdg_subset = df[df.Tracer== 'FDG']
