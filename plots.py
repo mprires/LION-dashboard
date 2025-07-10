@@ -179,7 +179,7 @@ def display_progress_bar(actual_value, expected_total, title="Segmented cases"):
     - expected_total (float): The total value expected.
     - title (str): The title displayed above the progress bar.
     """
-    progress_percentage = int(actual_value / expected_total)  # Calculate the progress percentage
+    progress_percentage = actual_value / expected_total   # Calculate the progress percentage
 
     st.markdown(f"**{title}**")  # Display the title
 
@@ -194,16 +194,16 @@ def display_progress_bar(actual_value, expected_total, title="Segmented cases"):
     .progress-bar {{
         width: {str(progress_percentage)}%;
         height: 30px;
-        background-color: white;  /* Pink color */
+        background-color: #ff69b4;  /* Pink color */
         text-align: center;
         line-height: 30px;
-        color: #ff69b4;
+        color: white;
         font-weight: bold;  /* Make the text bold */
         border-radius: 5px;
     }}
     </style>
     <div class="progress-container">
-      <div class="progress-bar">{progress_percentage:%}</div>
+      <div class="progress-bar">{progress_percentage:.1%}</div>
     </div>
     """
     st.markdown(progress_html, unsafe_allow_html=True)  # Render the HTML
