@@ -192,7 +192,7 @@ def display_progress_bar(actual_value, expected_total, title="Segmented cases"):
         border-radius: 5px;
     }}
     .progress-bar {{
-        width: {str(progress_percentage)}%;
+        width: {str(progress_percentage * 1000)}%;
         height: 30px;
         background-color: #ff69b4;  /* Pink color */
         text-align: center;
