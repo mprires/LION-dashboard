@@ -100,7 +100,6 @@ def main():
     psma_plot = plots.speedometer(psma_subset, constants.NUMBER_OF_PSMA_CASES)
 
     fdg_verified = fdg_subset["Number of verified cases"].sum()
-    print(fdg_verified)
     psma_verified = psma_subset["Number of verified cases"].sum()
 
     st.plotly_chart(stacked_bar, use_container_width=True)
