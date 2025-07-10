@@ -179,7 +179,7 @@ def display_progress_bar(actual_value, expected_total, title="Segmented cases"):
     - expected_total (float): The total value expected.
     - title (str): The title displayed above the progress bar.
     """
-    progress_percentage = actual_value / expected_total  # Calculate the progress percentage
+    progress_percentage = int(actual_value / expected_total * 100)  # Calculate the progress percentage
 
     st.markdown(f"**{title}**")  # Display the title
 
