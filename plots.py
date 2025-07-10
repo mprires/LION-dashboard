@@ -170,45 +170,48 @@ def generate_gradient_colors(start_color, end_color, steps):
     return colors
 
 
-def display_progress_bar(actual_value, expected_total, title="Segmented cases"):
+def display_progress_bar(actual_value, expected_total, title="Segmented cases", unique_id=""):
     """
     Displays a progress bar indicating the progress towards the expected total with a custom pink color and bold text.
-
     Parameters:
     - actual_value (float): The current value achieved.
     - expected_total (float): The total value expected.
     - title (str): The title displayed above the progress bar.
+    - unique_id (str): A unique identifier to avoid CSS class name collisions.
     """
-    progress_percentage = actual_value / expected_total   # Calculate the progress percentage
+    progress_percentage = actual_value / expected_total
+    bar_width = progress_percentage * 100  # percent for CSS width
 
-    st.markdown(f"**{title}**")  # Display the title
+    st.markdown(f"**{title}**")
+    print(f"{progress_percentage:.1%}")
 
-    # Create a custom HTML for the progress bar with bold text
+    container_class = f"progress-container-{unique_id}"
+    bar_class = f"progress-bar-{unique_id}"
+
     progress_html = f"""
     <style>
-    .progress-container {{
+    .{container_class} {{
         width: 100%;
         background-color: #ddd;
         border-radius: 5px;
     }}
-    .progress-bar {{
-        width: {str(progress_percentage * 100)}%;
+    .{bar_class} {{
+        width: {bar_width:.1f}%;
         height: 30px;
-        background-color: #ff69b4;  /* Pink color */
+        background-color: #ff69b4;
         text-align: center;
         line-height: 30px;
         color: white;
-        font-weight: bold;  /* Make the text bold */
+        font-weight: bold;
         border-radius: 5px;
     }}
     </style>
-    <div class="progress-container">
-      <div class="progress-bar">{progress_percentage:.1%}</div>
+    <div class="{container_class}">
+      <div class="{bar_class}">{progress_percentage:.1%}</div>
     </div>
     """
-    st.markdown(progress_html, unsafe_allow_html=True)  # Render the HTML
 
-    # Optionally, display the percentage and actual values below the bar
+    st.markdown(progress_html, unsafe_allow_html=True)
     st.markdown(f"**{progress_percentage:.1%}** ({actual_value} of {expected_total})")
 
 

@@ -1,7 +1,6 @@
 import streamlit as st
 import altair as alt
 import os
-
 import constants
 import download_data
 import plots
@@ -46,8 +45,7 @@ def main():
             object-fit: cover;
         }}
         </style>
-
-        <a href="https://www.enhance.pet" target="_blank" rel="noopener noreferrer" class="clickable-image">
+    <a href="https://www.enhance.pet" target="_blank" rel="noopener noreferrer" class="clickable-image">
             <img src='data:image/jpeg;base64,{enhance_logo}'>
         </a>
         """,
@@ -95,7 +93,6 @@ def main():
 
     stacked_bar = plots.horizontal_stacked_bar_chart(df)
     world_map = plots.world_map_plot(df)
-
     fdg_plot = plots.speedometer(fdg_subset, constants.NUMBER_OF_FDG_CASES)
     psma_plot = plots.speedometer(psma_subset, constants.NUMBER_OF_PSMA_CASES)
 
@@ -130,7 +127,7 @@ def main():
                 unsafe_allow_html=True
             )
             st.plotly_chart(fdg_plot)
-            plots.display_progress_bar(fdg_verified, constants.NUMBER_OF_FDG_CASES)
+            plots.display_progress_bar(fdg_verified, constants.NUMBER_OF_FDG_CASES, unique_id="fdg")
 
 
         with psma_col:
@@ -145,7 +142,7 @@ def main():
             )
 
             st.plotly_chart(psma_plot)
-            plots.display_progress_bar(psma_verified, constants.NUMBER_OF_PSMA_CASES)
+            plots.display_progress_bar(psma_verified, constants.NUMBER_OF_PSMA_CASES, unique_id="psma")
 
 
     # st.markdown(
