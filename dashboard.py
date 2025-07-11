@@ -89,6 +89,13 @@ def main():
     df = download_data.read_excel_from_s3(bucket_name="enhance-pet", file_key="lion/dashboard_excel_10072025.csv",
                                           aws_access_key_id=aws_access_key_id, aws_secret_access_key=aws_secret_access_key)
 
+    holdout_df = download_data.read_excel_from_s3(bucket_name="enhance-pet", file_key="lion/dashboard_holdout.csv",
+                                          aws_access_key_id=aws_access_key_id, aws_secret_access_key=aws_secret_access_key)
+
+    # Group by tracer and sum verified cases
+    holdout_summary = holdout_df.groupby("Tracer")["Number of verified cases"].sum().reset_index()
+    holdout_dict = dict(zip(holdout_summary["Tracer"], holdout_summary["Number of verified cases"]))
+
     fdg_subset = df[df.Tracer== 'FDG']
     psma_subset = df[df.Tracer == 'PSMA']
 
@@ -130,6 +137,20 @@ def main():
             st.plotly_chart(fdg_plot)
             plots.display_progress_bar(fdg_verified, constants.NUMBER_OF_FDG_CASES, unique_id="fdg")
 
+            fdg_holdout = holdout_dict.get("FDG", 0)
+            st.markdown(
+                f"""
+                <div style='text-align: center; margin-top: 30px; margin-bottom: 10px;'>
+                    <span style="font-size: 18px;">
+                        Number of cases for <span style="color:#ff69b4;"><strong>FDG holdout</strong></span>
+                    </span>
+                    <div style="font-size: 48px; font-weight: bold; color: white; margin-top: 10px;">
+                        {fdg_holdout}
+                    </div>
+                </div>
+                """,
+                unsafe_allow_html=True
+            )
 
         with psma_col:
             # Centered secondary title with adjusted spacing
@@ -145,6 +166,20 @@ def main():
             st.plotly_chart(psma_plot)
             plots.display_progress_bar(psma_verified, constants.NUMBER_OF_PSMA_CASES, unique_id="psma")
 
+            psma_holdout = holdout_dict.get("PSMA", 0)
+            st.markdown(
+                f"""
+                <div style='text-align: center; margin-top: 30px; margin-bottom: 10px;'>
+                    <span style="font-size: 18px;">
+                        Number of cases for <span style="color:#ff69b4;"><strong>PSMA holdout</strong></span>
+                    </span>
+                    <div style="font-size: 48px; font-weight: bold; color: white; margin-top: 10px;">
+                        {psma_holdout}
+                    </div>
+                </div>
+                """,
+                unsafe_allow_html=True
+            )
 
     # st.markdown(
     #     f"""
