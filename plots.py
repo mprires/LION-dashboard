@@ -262,3 +262,49 @@ def horizontal_stacked_bar_chart(df):
     )
 
     return fig
+
+
+def stacked_bar_holdout_per_tracer(df, tracer_name):
+    """
+    Generates a stacked bar chart of expected cases per site for a specific tracer's holdout data.
+
+    Parameters:
+    - df (DataFrame): Holdout DataFrame.
+    - tracer_name (str): 'FDG' or 'PSMA'.
+
+    Returns:
+    - fig (plotly.graph_objs._figure.Figure): The stacked bar chart figure.
+    """
+    tracer_df = df[df["Tracer"] == tracer_name]
+
+    # Group and sum expected cases per site
+    site_df = tracer_df.groupby("Site")["Number of expected cases"].sum().reset_index()
+    site_df = site_df.sort_values(by="Number of expected cases", ascending=False)
+
+    fig = go.Figure()
+
+    colors = px.colors.sequential.Sunsetdark
+
+    for i, row in site_df.iterrows():
+        fig.add_trace(go.Bar(
+            x=[row["Site"]],
+            y=[row["Number of expected cases"]],
+            name=row["Site"],
+            marker=dict(color=colors[i % len(colors)]),
+            text=row["Number of expected cases"],
+            textposition="auto",
+            hovertemplate="<b>%{x}</b><br>Expected: %{y}<extra></extra>"
+        ))
+
+    fig.update_layout(
+        title=f"Expected Cases per Site – {tracer_name} Holdout",
+        barmode="stack",
+        xaxis_title="Site",
+        yaxis_title="Number of Expected Cases",
+        paper_bgcolor="#0E1117",
+        plot_bgcolor="#0E1117",
+        font=dict(color="white"),
+        height=400
+    )
+
+    return fig

@@ -92,6 +92,9 @@ def main():
     holdout_df = download_data.read_excel_from_s3(bucket_name="enhance-pet", file_key="lion/dashboard_holdout.csv",
                                           aws_access_key_id=aws_access_key_id, aws_secret_access_key=aws_secret_access_key)
 
+    fdg_holdout_bar = plots.stacked_bar_holdout_per_tracer(holdout_df, "FDG")
+    psma_holdout_bar = plots.stacked_bar_holdout_per_tracer(holdout_df, "PSMA")
+
     # Group by tracer and sum verified cases
     holdout_summary = holdout_df.groupby("Tracer")["Number of verified cases"].sum().reset_index()
     holdout_dict = dict(zip(holdout_summary["Tracer"], holdout_summary["Number of verified cases"]))
@@ -151,6 +154,7 @@ def main():
                 """,
                 unsafe_allow_html=True
             )
+            st.plotly_chart(fdg_holdout_bar, use_container_width=True)
 
         with psma_col:
             # Centered secondary title with adjusted spacing
@@ -180,6 +184,7 @@ def main():
                 """,
                 unsafe_allow_html=True
             )
+            st.plotly_chart(psma_holdout_bar, use_container_width=True)
 
     # st.markdown(
     #     f"""
